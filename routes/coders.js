@@ -1,40 +1,14 @@
-const express = require('express');
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
+const ctrlCoder = require("../controllers/coders");
 
-router.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    msg: "Show all Coder-Bootcamp",
-  });
-});
+router.route("/").get(ctrlCoder.getCoders).post(ctrlCoder.createCoder);
 
-router.get("/:id", (req, res) => {
-  res.status(200).json({
-    success: true,
-    msg: `Get Coder ${req.params.id}`,
-  });
-});
-
-router.post("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    msg: "Create new Coder-Bootcamp",
-  });
-});
-
-router.put("/:id", (req, res) => {
-  res.status(200).json({
-    success: true,
-    msg: `Update Coder ${req.params.id}`,
-  });
-});
-
-router.delete("/:id", (req, res) => {
-  res.status(200).json({
-    success: true,
-    msg: `Delete Coder ${req.params.id}`,
-  });
-});
+router
+  .route("/:id")
+  .get(ctrlCoder.getCoder)
+  .put(ctrlCoder.updateCoder)
+  .delete(ctrlCoder.deleteCoder);
 
 module.exports = router;
