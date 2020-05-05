@@ -1,30 +1,50 @@
+const Coder = require("../models/Coders");
+
 // @desc Get all coders
 // @route GET /api/v1/coders
 // @access Public
-getCoders = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: "Show all Coder-Bootcamp",
-  });
+getCoders = async (req, res, next) => {
+  try {
+    const coders = await Coder.find();
+    res.status(200).json({
+      success: true,
+      data: coders,
+    });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err });
+  }
 };
 
 // @desc Get single coders
 // @route GET /api/v1/coders/:id
 // @access Public
-getCoder = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: `Get Coder ${req.params.id}`,
-  });
+getCoder = async (req, res, next) => {
+  try {
+    const coder = await Coder.findById(req.params.id);
+    if (!coder) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({
+      success: true,
+      data: coder,
+    });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err });
+  }
 };
 // @desc Create new coder
 // @route POST /api/v1/coders
 // @access Private
-createCoder = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: "Create new Coder-Bootcamp",
-  });
+createCoder = async (req, res, next) => {
+  try {
+    const coder = await Coder.create(req.body);
+    res.status(201).json({
+      success: true,
+      data: coder,
+    });
+  } catch (err) {
+    res.status(400).json({ succes: false });
+  }
 };
 // @desc Update coder
 // @route PUT /api/v1/coders/:id
